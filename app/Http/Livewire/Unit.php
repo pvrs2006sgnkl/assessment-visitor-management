@@ -7,7 +7,7 @@ use App\Models\Units;
 
 class Unit extends Component
 {
-    public $units, $unit_no, $unit_type, $contact_number, $unit_id;
+    public $units, $block_no, $unit_no, $unit_type, $contact_number, $unit_id;
     public $isModalOpen = 0;
 
     public function render()
@@ -44,12 +44,14 @@ class Unit extends Component
     public function store()
     {
         $this->validate([
-            'unit_no' => 'required',
-            'unit_type' => 'required',
-            'contact_number' => 'required|integer',
+            'block_no' => 'required|integer',
+            'unit_no' => 'required|string',
+            'unit_type' => 'required|string',
+            'contact_number' => 'required|string',
         ]);
 
         Units::updateOrCreate(['id' => $this->unit_id], [
+            'block_no' => $this->block_no,
             'unit_no' => $this->unit_no,
             'type' => $this->unit_type,
             'contact_number' => $this->contact_number,
@@ -65,10 +67,10 @@ class Unit extends Component
     {
         $detail = Units::findOrFail($id);
         $this->unit_id = $id;
+        $this->block_no = $detail->block_no;
         $this->unit_no = $detail->unit_no;
         $this->unit_type = $detail->type;
         $this->contact_number = $detail->contact_number;
-
         $this->openModalPopover();
     }
     

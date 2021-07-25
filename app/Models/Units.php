@@ -16,5 +16,5 @@ class Units extends Model
      *
      * @var array
      */
-    protected $fillable = ['unit_no', 'type', 'contact_number'];
+    protected $fillable = ['block_no', 'unit_no', 'type', 'contact_number'];
 }

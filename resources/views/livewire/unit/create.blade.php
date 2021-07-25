@@ -11,6 +11,21 @@
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="">
                         <div class="mb-4">
+                            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="exampleFormControlInput2" wire:model="block_no">
+                                <option value="NA" >Select Block</option>
+                                <option value="1" {{ $block_no == '1' ? 'selected="selected"' : '' }}>Blk 1</option>
+                                <option value="2" {{ $block_no == '2' ? 'selected="selected"' : '' }}>Blk 2</option>
+                                <option value="3" {{ $block_no == '3' ? 'selected="selected"' : '' }}>Blk 3</option>
+                                <option value="4" {{ $block_no == '4' ? 'selected="selected"' : '' }}>Blk 4</option>
+                                <option value="5" {{ $block_no == '5' ? 'selected="selected"' : '' }}>Blk 5</option>
+                                <option value="6" {{ $block_no == '6' ? 'selected="selected"' : '' }}>Blk 6</option>
+                                <option value="7" {{ $block_no == '7' ? 'selected="selected"' : '' }}>Blk 7</option>
+                                <option value="8" {{ $block_no == '8' ? 'selected="selected"' : '' }}>Blk 8</option>
+                            </select> 
+                            @error('unit_type') <span class="text-red-500">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="mb-4">
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput1" placeholder="Enter Unit Number" wire:model="unit_no"

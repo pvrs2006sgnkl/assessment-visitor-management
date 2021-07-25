@@ -55,7 +55,7 @@
                             <button wire:click="delete({{ $unit->id }})"
                                 class="btn-rounded font-bold py-2 px-4 rounded">Delete
                             </button>
-                            <button wire:click="edit({{ $unit->user_id }})"
+                            <button wire:click="edit({{ $unit->id }})"
                                 class="btn-rounded font-bold py-2 px-4 rounded ">Edit
                             </button>
                         </td>
