@@ -4,17 +4,23 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
+
+use App\Helper\Utilites;
+
 use App\Models\History;
 
 class CovidRule implements Rule
 {
+    protected $user_type = 'visitor'; 
     public $length = 10;
 
     public $lengthCheck = false;
 
-    public function __construct($length)
+    public function __construct($user_type, $length)
     {
         $this->length = $length;
+        $this->user_type = $user_type;
+        $this->utilites = app(Utilites::class);
     }
 
     /**
@@ -26,7 +32,7 @@ class CovidRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return ($this->findActiveVisitorsCountByUnitId($value) < $this->length);
+        return ($this->findActiveVisitorsCountByUnitId($this->user_type, $value) < $this->length);
     }
 
     /**
@@ -39,15 +45,17 @@ class CovidRule implements Rule
         return 'Access denied, Due to covid-19 measures unit has a maximum up to '.$this->length.' visitors allowed.';
     }
 
-    private function findActiveVisitorsCountByUnitId($id){
+    private function findActiveVisitorsCountByUnitId($user_type, $id){
 
         if(empty($id)) {
             return 0;
         }
 
-        return History::where('unit_id', $id)
-                    ->whereNull('exited_at')
-                    ->whereNull('deleted_at')
-                    ->count();
+        $requst_params = [
+            "user_type" => $user_type,
+            "id" => $id,
+        ];
+
+        return $this->utilites->getActiveVisitors($requst_params)->count(); 
     }
 }

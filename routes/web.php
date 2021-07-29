@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Unit;
+use App\Http\Livewire\Units;
 use App\Http\Livewire\Tenant;
 use App\Http\Livewire\Visitor;
 
@@ -27,11 +27,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return redirect(route('unit.list'));
     })->name('dashboard');
 
-    Route::get('unit', Unit::class)->name('unit.list');
-    Route::get('tenant/list/', Tenant::class)->name('tenant.list');
+    Route::get('unit', Units::class)->name('unit.list');
+    Route::get('tenant/list', Tenant::class)->name('tenant.list');
     // Route::get('visitor', Visitor::class)->name('visitor.list');
     
-    Route::match(['get', 'post'], 'visitor', Visitor::class)->name('visitor.list');
+    Route::match(['get', 'post'], 'visitor/list', Visitor::class)->name('visitor.list');
 
 });
 

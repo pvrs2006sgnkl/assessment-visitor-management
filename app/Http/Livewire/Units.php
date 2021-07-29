@@ -3,16 +3,16 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Units;
+use App\Models\Unit;
 
-class Unit extends Component
+class Units extends Component
 {
     public $units, $block_no, $unit_no, $unit_type, $contact_number, $unit_id;
     public $isModalOpen = 0;
 
     public function render()
     {
-        $this->units = Units::whereNull('deleted_at')
+        $this->units = Unit::whereNull('deleted_by')
             ->orderBy('block_no')
             ->orderBy('unit_no')
             ->get();
@@ -50,7 +50,7 @@ class Unit extends Component
             'contact_number' => 'required|string',
         ]);
 
-        Units::updateOrCreate(['id' => $this->unit_id], [
+        Unit::updateOrCreate(['id' => $this->unit_id], [
             'block_no' => $this->block_no,
             'unit_no' => $this->unit_no,
             'type' => $this->unit_type,
@@ -65,7 +65,7 @@ class Unit extends Component
 
     public function edit($id)
     {
-        $detail = Units::findOrFail($id);
+        $detail = Unit::findOrFail($id);
         $this->unit_id = $id;
         $this->block_no = $detail->block_no;
         $this->unit_no = $detail->unit_no;
@@ -76,7 +76,7 @@ class Unit extends Component
     
     public function delete($id)
     {
-        Units::find($id)->delete();
+        Unit::find($id)->delete();
         session()->flash('message', 'Unit has been deleted.');
     }
 

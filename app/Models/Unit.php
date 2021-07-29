@@ -4,52 +4,39 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Sanctum\HasApiTokens;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Models\Unit;
+use App\Models\User;
+use App\Models\Unituser;
+use App\Models\History;
 
-class User extends Authenticatable
+class Unit extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'mobile_number',
-        'user_type', 
-        'nric',
-        'unit_id'
-    ];
+    protected $guarded = [];
 
-    public function unit() {
+    public function user() {
         return $this->belongsToMany(
-            Unit::class,
+            User::class,
             'unit_users',
-            'user_id',
             'unit_id',
+            'id',
+            'id',
         )
         ->withTimestamps()
-        ->as('user_unit');
+        ->withPivot('user_id');
     }
 
-    public function units() {
+    public function users() {
         return $this->hasManyThrough(
-            Unit::class,
-            Unituser::class,
+            User::class,
+            Userunit::class,
             'user_id',
             'id',
             'id',
-            'unit_id',
+            'user_id'
         );
     }
 
@@ -59,20 +46,20 @@ class User extends Authenticatable
             'unit_users',
             'user_id',
             'unit_id',
+            'id',
         )
-        ->withTimestamps()
-        ->as('user_history');
+        ->withTimestamps();
     }
 
     public function histories() {
         return $this->hasManyThrough(
             History::class,
-            Unituser::class,
-            'user_id',
+            Userunit::class,
             'user_id',
             'unit_id',
-            'unit_id'
+            'id',
+            'id'
         )
-        ->withPivot('id');
+        ->withTimestamps();
     }
 }

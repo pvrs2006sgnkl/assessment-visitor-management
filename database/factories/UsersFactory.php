@@ -31,7 +31,6 @@ class UsersFactory extends Factory
             'mobile_number' => $this->faker->unique()->numberBetween(6000000, 90000000),
             'nric' => $this->faker->unique()->numberBetween(10000, 99999),
             'user_type' => 'tenant',
-            'unit_id' => $this->faker->numberBetween(1, 50),
         ];
     }
 

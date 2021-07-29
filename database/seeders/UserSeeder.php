@@ -21,7 +21,6 @@ class UserSeeder extends Seeder
             'mobile_number' => substr(mt_rand(111111, 9999999), 0, 8),
             'nric' => substr(mt_rand(111111, 9999999), 0, 5),
             'user_type' => 'admin',
-            'unit_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

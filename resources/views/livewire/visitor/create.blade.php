@@ -12,32 +12,6 @@
                     <input type="hidden" wire:model="user_id" />
                     <div class="">
                         <div class="mb-4">
-                            <input type="text"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput1" placeholder="Enter Name" wire:model="name"
-                                maxlength="100"
-                                @if ($is_update) readonly @endif
-                                >
-                            @error('name') <span class="text-red-500">{{ $message }}</span>@enderror
-                        </div>
-                        <div class="mb-4">
-                            <input type="text"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput1" placeholder="Whom you want to meet" wire:model="meet_person_name"
-                                maxlength="10"
-                                >
-                            @error('meet_person_name') <span class="text-red-500">{{ $message }}</span>@enderror
-                        </div>
-                        <div class="mb-4">
-                            <input type="text"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput1" placeholder="Enter Mobile Number" wire:model="mobile_number"
-                                maxlength="10"
-                                @if ($is_update) readonly @endif
-                                >
-                            @error('mobile_number') <span class="text-red-500">{{ $message }}</span>@enderror
-                        </div>
-                        <div class="mb-4">
                             <select class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                                 id="unit_no" wire:model="unit_id"
                                 @if ($is_update) disabled @endif>
@@ -50,6 +24,32 @@
                             @error('unit_id') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
 
+                        <div class="mb-4">
+                            <input type="text"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="exampleFormControlInput1" placeholder="Enter Name" wire:model="name"
+                                maxlength="100"
+                                @if ($is_update) readonly @endif
+                                >
+                            @error('name') <span class="text-red-500">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="mb-4">
+                            <input type="text"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="exampleFormControlInput1" placeholder="Whom you want to meet" wire:model="meet_person_name"
+                                maxlength="100"
+                                >
+                            @error('meet_person_name') <span class="text-red-500">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="mb-4">
+                            <input type="text"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="exampleFormControlInput1" placeholder="Enter Mobile Number" wire:model="mobile_number"
+                                maxlength="10"
+                                @if ($is_update) readonly @endif
+                                >
+                            @error('mobile_number') <span class="text-red-500">{{ $message }}</span>@enderror
+                        </div>
                         <div class="mb-4">
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

@@ -25,8 +25,8 @@
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="px-4 py-2 w-20">No.</th>
-                        <th class="px-4 py-2">Contact Number</th>
                         <th class="px-4 py-2">Occupant Name</th>
+                        <th class="px-4 py-2">Mobile #</th>
                         <th class="px-4 py-2">Unit No</th>
                         <th class="px-4 py-2">NRIC</th>
                         <th class="px-4 py-2">Action</th>
@@ -34,21 +34,23 @@
                 </thead>
                 <tbody>
                     @forelse($list as $i=>$record)
-                    <tr>
-                        <td class="border px-4 py-2 text-center">{{ $i+1 }}</td>
-                        <td class="border px-4 py-2 text-center">{{ $record->name }}</td>
-                        <td class="border px-4 py-2 text-center">Blk {{ $record->block_no}} (#{{ $record->unit_no}})</td>
-                        <td class="border px-4 py-2 text-center">#{{ $record->mobile_number}}</td>
-                        <td class="border px-4 py-2 text-center">*****{{ $record->nric}}</td>
-                        <td class="border px-4 py-2 text-center">
-                            <button wire:click="delete({{ $record->user_id }})"
-                                class="btn-rounded font-bold py-2 px-4 rounded">Delete
-                            </button>
-                            <button wire:click="edit({{ $record->unit_id }}, {{$record->user_id}})"
-                                class="btn-rounded font-bold py-2 px-4 rounded ">Edit
-                            </button>
-                        </td>
-                    </tr>
+                        @foreach($record->units as $unit)
+                            <tr>
+                                <td class="border px-4 py-2 text-center">{{ $i+1 }}</td>
+                                <td class="border px-4 py-2 text-center">{{ $record->name}}</td>
+                                <td class="border px-4 py-2 text-center">{{ $record->mobile_number }}</td>
+                                <td class="border px-4 py-2 text-center">Blk {{ $unit->block_no}} (#{{ $unit->unit_no}})</td>
+                                <td class="border px-4 py-2 text-center">*****{{ $record->nric}}</td>
+                                <td class="border px-4 py-2 text-center">
+                                    <button wire:click="delete({{ $record->id }})"
+                                        class="btn-rounded font-bold py-2 px-4 rounded">Delete
+                                    </button>
+                                    <button wire:click="edit({{ $unit->id }}, {{$record->id}})"
+                                        class="btn-rounded font-bold py-2 px-4 rounded ">Edit
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
                     @empty
                         <td class="border px-4 py-2 text-center" colspan="6">No records found</td>
                     @endforelse
