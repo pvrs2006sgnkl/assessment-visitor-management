@@ -26,14 +26,7 @@ class History extends Model
     ];
 
     public function unit() {
-        return $this->belongsToMany(
-            History::class,
-            'unit_users',
-            'user_id',
-            'unit_id',
-        )
-        ->withTimestamps()
-        ->as('user_unit');
+        return $this->hasOne(Unit::class, 'id', 'user_id');
     }
 
     public function units() {
@@ -48,25 +41,17 @@ class History extends Model
     }
 
     public function user() {
-        return $this->belongsToMany(
-            User::class,
-            'unit_users',
-            'user_id',
-            'id',
-            'id',
-        )
-        ->withTimestamps()
-        ->as('user');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function users() {
         return $this->hasManyThrough(
             User::class,
             Unituser::class,
+            'unit_id',
+            'id',
+            'id',
             'user_id',
-            'id',
-            'id',
-            'id'
         );
     }
 }

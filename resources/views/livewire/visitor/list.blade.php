@@ -61,31 +61,43 @@
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="px-4 py-2 w-20">No.</th>
-                        <th class="px-4 py-2">Occupant Name</th>
-                        <th class="px-4 py-2">Mobile #</th>
-                        <th class="px-4 py-2">Unit No</th>
-                        <th class="px-4 py-2">NRIC</th>
-                        <th class="px-4 py-2">Action</th>
+                        <th class="px-4 py-2">Guest Name</th>
+                        <th class="px-3 py-2">Unit No</th>
+                        <th class="px-3 py-2">Nric</th>
+                        <th class="px-3 py-2">Mobile#</th>
+                        <th class="px-4 py-2">Check In</th>
+                        <th class="px-4 py-2">Check Out</th>
+                        <th class="px-4 py-2" nowrap>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($list as $i=>$record)
                         @foreach($record->units as $unit)
-                            <tr>
-                                <td class="border px-4 py-2 text-center">{{ $i+1 }}</td>
-                                <td class="border px-4 py-2 text-center">{{ $record->name }}</td>
-                                <td class="border px-4 py-2 text-center">{{ $record->mobile_number}}</td>
-                                <td class="border px-4 py-2 text-center">Blk {{ $unit->block_no}} ( #{{ $unit->unit_no}} )</td>
-                                <td class="border px-4 py-2 text-center">*****{{ $record->nric}}</td>
-                                <td class="border px-4 py-2 text-center">
-                                    <button wire:click="delete({{ $record->unit_id }}, {{$record->user_id}})"
-                                        class="btn-rounded font-bold py-2 px-4 rounded">Delete
-                                    </button>
-                                    <button wire:click="edit({{ $unit->id }}, {{$record->id}}, {{ $record->history_id }})"
-                                        class="btn-rounded font-bold py-2 px-4 rounded ">Edit
-                                    </button>
-                                </td>
-                            </tr>
+                            @foreach($record->history as $history)
+                                <tr>
+                                    <td class="border px-4 py-2 text-center">{{ $i+1 }}</td>
+                                    <td class="border px-4 py-2 text-center">{{ $record->name }} <br /> (*****{{ $record->nric}})</td>
+                                    <td class="border px-3 py-2 text-center">Blk {{ $unit->block_no}} ( #{{ $unit->unit_no}} )</td>
+                                    <td class="border px-3 py-2 text-center">*****{{ $record->nric}}</td>
+                                    <td class="border px-3 py-2 text-center">{{ $record->mobile_number}}</td>
+                                    <td class="border px-4 py-2 text-center">{{ $history->entered_at }}</td>
+                                    <td class="border px-4 py-2 text-center">
+                                        @if(empty($history->exited_at))
+                                            <span class="text-blue-100">Still In</span>
+                                        @else
+                                            {{ $history->exited_at }}
+                                        @endif
+                                    </td>
+                                    <td class="border py-2 text-center">
+                                        <button wire:click="delete({{ $history->id }}, {{ $unit->id }}, {{$record->id}})"
+                                            class="btn-rounded font-bold py-2 px-4 rounded">Delete
+                                        </button>
+                                        <button wire:click="edit({{ $history->id }}, {{ $unit->id }}, {{$record->id}})"
+                                            class="btn-rounded font-bold py-2 px-4 rounded "> &nbsp; Edit &nbsp;
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         @endforeach
                     @empty
                         <td class="border px-4 py-2 text-center" colspan="6">No records found</td>
@@ -101,5 +113,11 @@
         border-radius:5px;
         margin: 10px 10px 10px 0;
         float:right;
+    }
+
+    .text-blue-100
+    {
+        color:#008080;
+        font-size:1.2rem;
     }
 </style>

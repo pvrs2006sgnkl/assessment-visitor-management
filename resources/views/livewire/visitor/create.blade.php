@@ -27,7 +27,7 @@
                         <div class="mb-4">
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput1" placeholder="Enter Name" wire:model="name"
+                                id="exampleFormControlInput1" placeholder="Vistor Name" wire:model="name"
                                 maxlength="100"
                                 @if ($is_update) readonly @endif
                                 >

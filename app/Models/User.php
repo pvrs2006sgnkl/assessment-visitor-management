@@ -54,14 +54,19 @@ class User extends Authenticatable
     }
 
     public function history() {
-        return $this->belongsToMany(
+        return $this->hasMany(
             History::class,
-            'unit_users',
             'user_id',
-            'unit_id',
-        )
-        ->withTimestamps()
-        ->as('user_history');
+            'id',
+        ); 
+        // return $this->belongsToMany(
+        //     History::class,
+        //     'unit_users',
+        //     'user_id',
+        //     'unit_id',
+        // )
+        // ->withTimestamps()
+        // ->as('user_history');
     }
 
     public function histories() {

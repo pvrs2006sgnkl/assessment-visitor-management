@@ -96,13 +96,6 @@ class Visitor extends Component
         ]);
 
         DB::transaction(function () {
-            $unit_user_info = Unituser::where(function($query){
-                $query->where('user_id', $this->user_id);
-                $query->where('unit_id', $this->unit_id);
-            })
-            ->latest()
-            ->firstOrNew();
-
             if(!empty($this->user_id)) {
                 $user = User::find($this->user_id);
             }
@@ -122,7 +115,7 @@ class Visitor extends Component
             $user->unit()->sync($unit_info);
 
             // Prepare the visitor history params...
-            $history = History::findOrNew($unit_user_info->id);
+            $history = History::findOrNew($this->history_id);
             $history->user_id = $user->id;
             $history->unit_id = $this->unit_id;
             $history->meet_person_name = $this->meet_person_name;
@@ -138,25 +131,28 @@ class Visitor extends Component
         $this->resetCreateForm();
     }
 
-    public function edit($unit_id, $user_id, $history_id)
+    public function edit($history_id, $unit_id, $user_id)
     {
-        $detail = $this->findOneActiveVisitorsByUnitId($unit_id, $user_id, $history_id);
+        $this->history_id = $history_id;
+        $this->unit_id = $unit_id;
+        $this->user_id = $user_id;
+
+        $detail = $this->utilities->findActiveVisitorDetail($this);
 
         $this->is_update = true;
 
-        $this->history_id = $detail->history_id;
+        $this->history_id = $detail->id;
         $this->user_id = $detail->user_id;
-        $this->block_no = $detail->block_no;
+        $this->block_no = $detail->unit->block_no;
         $this->unit_id = $detail->unit_id;
-        $this->name = $detail->name;
-        $this->mobile_number = $detail->mobile_number;
-        $this->nric = $detail->nric;
-        $this->user_type = $detail->user_type;
+        $this->name = $detail->user->name;
+        $this->mobile_number = $detail->user->mobile_number;
+        $this->nric = $detail->user->nric;
+        $this->user_type = $detail->user->user_type;
         $this->checkin_at = (!empty($detail->entered_at))? $detail->entered_at : now()->format('dd-mm-YY hh:mm:i');
         $this->checkout_at = $detail->exited_at;
-        $this->meet_person_name = $detail->meeting_person;
-
-        dd($this);
+        $this->meet_person_name = $detail->meet_person_name;
+        
         $this->openModalPopover();
     }
     
